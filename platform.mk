@@ -12,12 +12,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Platform path
+PLATFORM_COMMON_PATH := device/sony/loire
+
 $(call inherit-product, device/sony/common/common.mk)
 $(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 
 SOMC_PLATFORM := loire
 
-SONY_ROOT := device/sony/loire/rootdir
+SONY_ROOT := $(PLATFORM_COMMON_PATH)/rootdir
 
 # Media
 PRODUCT_COPY_FILES += \
@@ -47,12 +50,14 @@ PRODUCT_COPY_FILES += \
 # Device Specific Hardware
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.opengles.aep.xml:system/etc/permissions/android.hardware.opengles.aep.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:system/etc/permissions/android.hardware.vulkan.level.xml \
+    frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:system/etc/permissions/android.hardware.vulkan.version.xml \
     frameworks/native/data/etc/android.hardware.sensor.barometer.xml:system/etc/permissions/android.hardware.sensor.barometer.xml \
     frameworks/native/data/etc/android.hardware.nfc.hce.xml:system/etc/permissions/android.hardware.nfc.hce.xml
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += \
-    device/sony/loire/overlay
+    $(PLATFORM_COMMON_PATH)/overlay
 
 # Platform Init
 PRODUCT_PACKAGES += \
@@ -100,11 +105,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
     rild.libpath=/vendor/lib64/libril-qc-qmi-1.so \
     ril.subscription.types=NV,RUIM
 
-# system prop for opengles version
-# 196609 is decimal for 0x30001 to
-# report major/minor versions as 3/1
+# OpenGLES Nougat version
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.opengles.version=196609
+    ro.opengles.version=196610
 
 # aDSP sensors
 ## max rate
